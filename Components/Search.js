@@ -10,8 +10,14 @@ class Search extends React.Component{
   constructor(props)
   {
     super(props)
+    this.page=0
+    this.totalPages=0
     this.searchedText=""
-    this.state={films:[],isLoading:false}
+    this.state = {
+      films: [],
+      isLoading: false
+    }
+
   }
 _displayLoading(){
   if(this.state.isLoading){
@@ -22,12 +28,30 @@ _displayLoading(){
     )
   }
 }
+// Components/Search.js
+
+_searchFilms() {
+  this.page = 0
+  this.totalPages = 0
+  this.setState({
+    films: []
+  })
+  // J'utilise la paramètre length sur mon tableau de films pour vérifier qu'il y a bien 0 film
+  console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de films : " + this.state.films.length)
+
+  this._loadFilms()
+}
 _loadFilms(){
   console.log(this.searchedText)
   if(this.searchedText.length>0){
     this.setState({ isLoading: true })
-  getFilmsFromApiWithSearchedText(this.searchedText).then(data=>{
-    this.setState({films: data.results,   isLoading:false})
+  getFilmsFromApiWithSearchedText(this.searchedText,this.page+1).then(data=>{
+     this.page=data.page
+     this.totalPages=data.total_pages
+     console.log(this.page+"---"+this.totalPages)
+    this.setState({films:[...this.state.films,...data.results], //films: this.state.films.concat(data.results)
+     isLoading:false
+      })
 
   })
   .catch((error) => console.error(error))
@@ -43,10 +67,13 @@ _searchedTextInputChanged(text){
          <TextInput style={styles.textinput} placeholder='Titre du film'
          onChangeText = {(text)=>this._searchedTextInputChanged(text)}
          />
-          <Button title='Rechercher' onPress={() => this._loadFilms()}/>
+          <Button title='Rechercher' onPress={() => this._searchFilms()}/>
          <FlatList
          data={this.state.films}
          keyExtractor={(item) => item.id.toString()}
+
+         onEndReachedThreshold={0.5}
+         onEndReached={()=>{if(this.page < this.totalPages){this._loadFilms(),console.log("loading more films!")}}}
          renderItem={({item}) => <FilmItem film={item}/>}
          />
          {this._displayLoading()}
