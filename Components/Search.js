@@ -19,6 +19,12 @@ class Search extends React.Component{
     }
 
   }
+_displayDetailForFilm = (idFilm) =>   {
+
+      this.props.navigation.navigate("FilmDetail",{idFilm:idFilm})
+      //this.props.navigation.navigate("FilmDetail")
+  }
+
 _displayLoading(){
   if(this.state.isLoading){
     return(
@@ -59,6 +65,7 @@ _loadFilms(){
 }
 _searchedTextInputChanged(text){
   this.searchedText=text
+
 }
 
   render() {
@@ -74,7 +81,7 @@ _searchedTextInputChanged(text){
 
          onEndReachedThreshold={0.5}
          onEndReached={()=>{if(this.page < this.totalPages){this._loadFilms(),console.log("loading more films!")}}}
-         renderItem={({item}) => <FilmItem film={item}/>}
+         renderItem={({item}) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm}/>}
          />
          {this._displayLoading()}
        </View>
