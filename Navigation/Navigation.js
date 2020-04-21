@@ -1,25 +1,20 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import Search from '../Components/Search'
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
-function MyStack() {
+function MainStackNavigator() {
   return (
-      <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Search} />
-
-
-    </Stack.Navigator>
-      </NavigationContainer>
-  );
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Search' component={Search} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
 
-export default MyStack  
 
 
-
-
-
-}
+export default MainStackNavigator
