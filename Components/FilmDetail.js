@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import { StyleSheet, View, Text ,ActivityIndicator,ScrollView,Image} from 'react-native'
 import {getFilmDetailFromApi,getImageFromApi} from '../API/TMDBApi'
 
@@ -40,12 +41,13 @@ componentDidMount() {
         <Text>Sorti le:{this.state.film.release_date}</Text>
         <Text>Note:{this.state.film.vote_average}/10</Text>
         <Text>Budjet:{this.state.film.budget}</Text>
-        <Text>Genre(s):{this.state.film.genres}</Text>
+      
         </ScrollView>
       )
     }
   }
   render() {
+    console.log(this.props)
     return (
       <View style={styles.main_container}>
       {this._displayLoading()}
@@ -76,4 +78,10 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FilmDetail
+const mapStateToProps=(state)=>{
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
+
+export default connect(mapStateToProps) (FilmDetail)
