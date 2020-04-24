@@ -6,9 +6,27 @@ import {getImageFromApi} from '../API/TMDBApi'
 
 class FilmItem extends React.Component {
 
+  _displayFavoriteImage(deplayfavoritImage){
+  
+    var sourceImage = require('../images/ic_favorite_border.png')
+
+     
+     
+      if(deplayfavoritImage!==-1) {  
+     sourceImage= require('../images/ic_favorite.png') 
+      console.log(require('../images/ic_favorite.png'))
+    
+    }   
+    return(
+    <Image
+    style={styles.favorite_image}
+    source={sourceImage}
+  />
+    )
+    }
   render() {
     //const film = this.props.film
- const { film, displayDetailForFilm } = this.props
+ const { film, displayDetailForFilm,deplayfavoritImage } = this.props
     return (
       <TouchableOpacity style={styles.main_container}
       onPress={()=>displayDetailForFilm(film.id)}>
@@ -18,6 +36,9 @@ class FilmItem extends React.Component {
         />
         <View style={styles.content_container}>
           <View style={styles.header_container}>
+          
+          {this._displayFavoriteImage(deplayfavoritImage)}
+         
             <Text style={styles.title_text}>{film.title}</Text>
             <Text style={styles.vote_text}>{film.vote_average}</Text>
           </View>
@@ -56,14 +77,14 @@ const styles = StyleSheet.create({
   },
   title_text: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
     flex: 1,
     flexWrap: 'wrap',
     paddingRight: 5
   },
   vote_text: {
     fontWeight: 'bold',
-    fontSize: 26,
+    fontSize: 24,
     color: '#666666'
   },
   description_container: {
@@ -79,6 +100,11 @@ const styles = StyleSheet.create({
   date_text: {
     textAlign: 'right',
     fontSize: 14
+  },favorite_container:{
+    alignItems:'center',
+  },favorite_image:{
+    width:30,
+    height:30
   }
 })
 

@@ -1,5 +1,6 @@
 
 import React from 'react'
+import {connect} from 'react-redux'
 import {ActivityIndicator,StyleSheet,View, TextInput, Button ,FlatList,Text} from 'react-native'
 //import films from  '../Helpers/filmsData'
 import FilmItem from './FilmItem'
@@ -17,10 +18,9 @@ class Search extends React.Component{
       films: [],
       isLoading: false
     }
-
   }
-_displayDetailForFilm = (idFilm) =>   {
 
+_displayDetailForFilm = (idFilm) =>   {
       this.props.navigation.navigate("FilmDetail",{idFilm:idFilm})
       //this.props.navigation.navigate("FilmDetail")
   }
@@ -67,6 +67,15 @@ _searchedTextInputChanged(text){
   this.searchedText=text
 
 }
+_displayFavoriteImage(filmId){
+  
+  
+  const filmIndex= this.props.favoritesFilm.findIndex(item=>
+     item.id===filmId
+    )
+  return filmIndex
+
+  }
 
   render() {
      return (
@@ -81,7 +90,7 @@ _searchedTextInputChanged(text){
 
          onEndReachedThreshold={0.5}
          onEndReached={()=>{if(this.page < this.totalPages){this._loadFilms(),console.log("loading more films!")}}}
-         renderItem={({item}) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm}/>}
+         renderItem={({item}) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} deplayfavoritImage={this._displayFavoriteImage(item.id)}/>}
          />
          {this._displayLoading()}
        </View>
@@ -111,4 +120,12 @@ const styles =StyleSheet.create( {
    justifyContent: 'center'
   }
 })
-export default Search
+const mapStateToProps=(state)=>{
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
+
+export default connect(mapStateToProps) (Search)
+
+
