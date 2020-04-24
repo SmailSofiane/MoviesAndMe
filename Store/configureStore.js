@@ -1,8 +1,11 @@
 import {createStore} from 'redux'
+import {combineReducers} from 'redux'
+
 import toggleFavorite from './Reduceres/favoriteReducer'
+import toggleHistorique from './Reduceres/historiqueReduce'
 
 
-
-
-
-export default createStore(toggleFavorite) 
+ const reducers =combineReducers({toggleFavorite,
+    toggleHistorique}
+ )
+export default createStore(reducers) 

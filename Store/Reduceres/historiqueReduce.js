@@ -1,4 +1,4 @@
-const initState={histoFilms:[]}
+const initState={historicFilms:[]}
 
 
  function toggleHistorique(state=initState,action){
@@ -7,27 +7,27 @@ const initState={histoFilms:[]}
     switch(action.type)
     {
         case 'TOGGLE_FILMDETAIL':
-            const histoFilmsIndex=state.histoFilms.findIndex
+            const histoFilmsIndex=state.historicFilms.findIndex
             (
              (item)=>item.id===action.value.id
             )
             if(histoFilmsIndex===-1){
                 nextState={
                     ...state,
-                    histoFilms:[...state.histoFilms,action.value]
+                    historicFilms:[...state.historicFilms,action.value]
                 }
                
             }
            
             return nextState||state
            case 'REMOVE_HISTORIC_FILM ':
-            const filmtoRemoveIndex=state.histoFilms.findIndex
+            const filmtoRemoveIndex=state.historicFilms.findIndex
             (
              (item)=>item.id===action.value.id
             )
             if(filmtoRemoveIndex!==-1){
                 nextState={...state,
-                    histoFilms:state.histoFilms.filter((item,index)=>
+                    historicFilms:state.historicFilms.filter((item,index)=>
                     index!==histoFifilmtoRemoveIndexlmsIndex
                     )
                 }
