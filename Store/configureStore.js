@@ -5,7 +5,7 @@ import toggleFavorite from './Reduceres/favoriteReducer'
 import toggleHistorique from './Reduceres/historiqueReduce'
 
 
- const reducers =combineReducers({toggleFavorite,
+ /*const reducers =combineReducers({toggleFavorite,
     toggleHistorique}
- )
-export default createStore(reducers) 
+ )*/
+export default createStore(toggleFavorite) 
